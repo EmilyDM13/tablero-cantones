@@ -14,6 +14,9 @@ library(flexdashboard)
 library(dplyr)
 library(sf)
 library(leaflet)
+library(DT)
+library(ggplot2)
+library(plotly)
 ```
 
 ```{r lectura-datos,message=FALSE,warning=FALSE}
@@ -37,15 +40,30 @@ leaflet() %>%
 Column {data-width=350}
 -----------------------------------------------------------------------
 
-### Chart B
+### Tabla de cantones
 
-```{r}
-
+```{r tabla, message=FALSE,warning=FALSE}
+cantones %>%
+  select(provincia, canton, area) %>%
+  datatable(options = list(
+    pageLength = 7,
+    language = list(url = '//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json')
+  ))
 ```
 
-### Chart C
+### Gráfico de cantones
 
-```{r}
+```{r grafico, message=FALSE,warning=FALSE}
+ggplot2_grafico_cantones <-
+cantones %>%
+  slice_max(area, n = 15) %>% 
+  ggplot(aes(x = reorder(canton, area), y = area)) +
+  geom_bar(stat = "identity") +
+  ggtitle("Área de cada cantón") +
+  xlab("Cantón") +
+  ylab("Área") +
+  coord_flip() 
 
+ggplotly(ggplot2_grafico_cantones) %>% config(locale = 'es')
 ```
 
