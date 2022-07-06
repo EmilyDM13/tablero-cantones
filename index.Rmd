@@ -26,7 +26,7 @@ cantones <-
 ```
 
 
-Column {data-width=650}
+Column {data-width=550}
 -----------------------------------------------------------------------
 
 ### Mapa de cantones 
@@ -37,7 +37,7 @@ leaflet() %>%
   addPolygons(data = cantones, weight = 1.0)
 ```
 
-Column {data-width=350}
+Column {data-width=450}
 -----------------------------------------------------------------------
 
 ### Tabla de cantones
